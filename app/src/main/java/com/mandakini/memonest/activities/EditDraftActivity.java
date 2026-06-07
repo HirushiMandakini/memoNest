@@ -9,6 +9,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.mandakini.memonest.R;
@@ -16,18 +18,21 @@ import com.mandakini.memonest.database.DraftDao;
 import com.mandakini.memonest.models.Draft;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
 
 public class EditDraftActivity extends AppCompatActivity {
 
     private EditText edtEditTitle, edtEditContent;
-    private Button btnUpdate;
+    private Button btnUpdate, btnChangeImage;
     private ImageView imgPreview;
 
     private DraftDao draftDao;
     private Draft draft;
     private int draftId;
-
     private String selectedImagePath = "";
+
+    private ActivityResultLauncher<String> galleryLauncher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,9 +42,24 @@ public class EditDraftActivity extends AppCompatActivity {
         edtEditTitle = findViewById(R.id.edtEditTitle);
         edtEditContent = findViewById(R.id.edtEditContent);
         btnUpdate = findViewById(R.id.btnUpdate);
+        btnChangeImage = findViewById(R.id.btnChangeImage);
         imgPreview = findViewById(R.id.imgPreview);
 
         draftDao = new DraftDao(this);
+
+        galleryLauncher = registerForActivityResult(
+                new ActivityResultContracts.GetContent(),
+                uri -> {
+                    if (uri != null) {
+                        selectedImagePath = copyImageToInternalStorage(uri);
+
+                        if (!selectedImagePath.isEmpty()) {
+                            imgPreview.setVisibility(View.VISIBLE);
+                            imgPreview.setImageURI(Uri.fromFile(new File(selectedImagePath)));
+                        }
+                    }
+                }
+        );
 
         draftId = getIntent().getIntExtra("draft_id", -1);
 
@@ -51,6 +71,7 @@ public class EditDraftActivity extends AppCompatActivity {
 
         loadDraft();
 
+        btnChangeImage.setOnClickListener(v -> galleryLauncher.launch("image/*"));
         btnUpdate.setOnClickListener(v -> updateDraft());
     }
 
@@ -69,21 +90,47 @@ public class EditDraftActivity extends AppCompatActivity {
         selectedImagePath = draft.getImageUri();
 
         if (selectedImagePath != null && !selectedImagePath.isEmpty()) {
-            try {
-                File imageFile = new File(selectedImagePath);
+            File imageFile = new File(selectedImagePath);
 
-                if (imageFile.exists()) {
-                    imgPreview.setVisibility(View.VISIBLE);
-                    imgPreview.setImageURI(Uri.fromFile(imageFile));
-                } else {
-                    imgPreview.setVisibility(View.GONE);
-                }
-
-            } catch (Exception e) {
+            if (imageFile.exists()) {
+                imgPreview.setVisibility(View.VISIBLE);
+                imgPreview.setImageURI(Uri.fromFile(imageFile));
+            } else {
                 imgPreview.setVisibility(View.GONE);
             }
         } else {
             imgPreview.setVisibility(View.GONE);
+        }
+    }
+
+    private String copyImageToInternalStorage(Uri uri) {
+        try {
+            File folder = new File(getFilesDir(), "draft_images");
+
+            if (!folder.exists()) {
+                folder.mkdirs();
+            }
+
+            File imageFile = new File(folder, "draft_" + System.currentTimeMillis() + ".jpg");
+
+            InputStream inputStream = getContentResolver().openInputStream(uri);
+            FileOutputStream outputStream = new FileOutputStream(imageFile);
+
+            byte[] buffer = new byte[1024];
+            int length;
+
+            while ((length = inputStream.read(buffer)) > 0) {
+                outputStream.write(buffer, 0, length);
+            }
+
+            outputStream.close();
+            inputStream.close();
+
+            return imageFile.getAbsolutePath();
+
+        } catch (Exception e) {
+            Toast.makeText(this, "Image update failed", Toast.LENGTH_SHORT).show();
+            return "";
         }
     }
 
