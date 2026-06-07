@@ -1,6 +1,7 @@
 package com.mandakini.memonest.activities;
 
 import android.content.Intent;
+import android.icu.text.SimpleDateFormat;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -15,6 +16,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.mandakini.memonest.R;
 import com.mandakini.memonest.database.DraftDao;
 import com.mandakini.memonest.models.Draft;
+
+import java.util.Date;
+import java.util.Locale;
 
 public class DraftDetailActivity extends AppCompatActivity {
 
@@ -80,7 +84,22 @@ public class DraftDetailActivity extends AppCompatActivity {
 
         txtDetailTitle.setText(draft.getTitle());
         txtDetailContent.setText(draft.getContent());
-        txtDetailDate.setText(draft.getCreatedAt());
+        try {
+            long timestamp = Long.parseLong(draft.getCreatedAt());
+
+            Date date = new Date(timestamp);
+
+            SimpleDateFormat sdf =
+                    new SimpleDateFormat(
+                            "dd MMM yyyy • hh:mm a",
+                            Locale.getDefault()
+                    );
+
+            txtDetailDate.setText(sdf.format(date));
+
+        } catch (Exception e) {
+            txtDetailDate.setText(draft.getCreatedAt());
+        }
 
         if (draft.getImageUri() != null && !draft.getImageUri().isEmpty()) {
             try {

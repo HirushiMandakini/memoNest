@@ -1,5 +1,6 @@
 package com.mandakini.memonest.adapters;
 
+import android.icu.text.SimpleDateFormat;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,7 +18,9 @@ import com.mandakini.memonest.models.Draft;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class DraftAdapter extends RecyclerView.Adapter<DraftAdapter.DraftViewHolder> {
 
@@ -54,6 +57,12 @@ public class DraftAdapter extends RecyclerView.Adapter<DraftAdapter.DraftViewHol
         holder.txtTitle.setText(draft.getTitle());
         holder.txtContent.setText(draft.getContent());
         holder.txtDate.setText(draft.getCreatedAt());
+        Date date = new Date(Long.parseLong(draft.getCreatedAt()));
+
+        SimpleDateFormat sdf =
+                new SimpleDateFormat("dd MMM yyyy • hh:mm a", Locale.getDefault());
+
+        holder.txtDate.setText(sdf.format(date));
 
         holder.checkSelect.setOnCheckedChangeListener(null);
         holder.checkSelect.setVisibility(bulkMode ? View.VISIBLE : View.GONE);

@@ -52,15 +52,14 @@
             android:textColor="#6B7280"
             android:textSize="13sp" />
 
+
         <TextView
             android:id="@+id/txtDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
-            android:text="Date"
-            android:textColor="#9CA3AF"
-            android:textSize="11sp" />
-
+            android:textSize="11sp"
+            android:textColor="#888888"
+            android:layout_marginTop="4dp"/>
     </LinearLayout>
 
     <ImageView
