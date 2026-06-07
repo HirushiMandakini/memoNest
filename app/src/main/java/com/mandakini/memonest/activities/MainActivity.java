@@ -20,6 +20,10 @@ import com.mandakini.memonest.adapters.DraftAdapter;
 import com.mandakini.memonest.database.DraftDao;
 import com.mandakini.memonest.models.Draft;
 
+import android.net.Uri;
+import androidx.core.content.FileProvider;
+import java.io.File;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -86,14 +90,77 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onShare(Draft draft) {
-                Intent shareIntent = new Intent(Intent.ACTION_SEND);
-                shareIntent.setType("text/plain");
-                shareIntent.putExtra(Intent.EXTRA_SUBJECT, draft.getTitle());
-                shareIntent.putExtra(
-                        Intent.EXTRA_TEXT,
-                        draft.getTitle() + "\n\n" + draft.getContent()
-                );
-                startActivity(Intent.createChooser(shareIntent, "Share Draft"));
+
+                try {
+
+                    Intent shareIntent = new Intent(Intent.ACTION_SEND);
+
+                    String shareText =
+                            draft.getTitle()
+                                    + "\n\n"
+                                    + draft.getContent();
+
+                    shareIntent.putExtra(
+                            Intent.EXTRA_SUBJECT,
+                            draft.getTitle()
+                    );
+
+                    shareIntent.putExtra(
+                            Intent.EXTRA_TEXT,
+                            shareText
+                    );
+
+                    if (draft.getImageUri() != null &&
+                            !draft.getImageUri().isEmpty()) {
+
+                        File imageFile = new File(draft.getImageUri());
+
+                        if (imageFile.exists()) {
+
+                            Uri imageUri = FileProvider.getUriForFile(
+                                    MainActivity.this,
+                                    getPackageName() + ".provider",
+                                    imageFile
+                            );
+
+                            shareIntent.setType("image/*");
+
+                            shareIntent.putExtra(
+                                    Intent.EXTRA_STREAM,
+                                    imageUri
+                            );
+
+                            shareIntent.addFlags(
+                                    Intent.FLAG_GRANT_READ_URI_PERMISSION
+                            );
+
+                        } else {
+
+                            shareIntent.setType("text/plain");
+                        }
+
+                    } else {
+
+                        shareIntent.setType("text/plain");
+                    }
+
+                    startActivity(
+                            Intent.createChooser(
+                                    shareIntent,
+                                    "Share Draft"
+                            )
+                    );
+
+                } catch (Exception e) {
+
+                    Toast.makeText(
+                            MainActivity.this,
+                            "Unable to share draft",
+                            Toast.LENGTH_SHORT
+                    ).show();
+
+                    e.printStackTrace();
+                }
             }
 
             @Override

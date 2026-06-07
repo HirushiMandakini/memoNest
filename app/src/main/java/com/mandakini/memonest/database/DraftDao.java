@@ -9,6 +9,8 @@ import com.mandakini.memonest.models.Draft;
 
 import java.util.ArrayList;
 import java.util.List;
+import android.content.ContentValues;
+import android.database.sqlite.SQLiteDatabase;
 
 public class DraftDao {
 
@@ -177,7 +179,23 @@ public class DraftDao {
 
         db.close();
     }
+    public int updateUploadStatus(int id, int isUploaded) {
+        SQLiteDatabase db = databaseHelper.getWritableDatabase();
 
+        ContentValues values = new ContentValues();
+        values.put(DatabaseHelper.COLUMN_IS_UPLOADED, isUploaded);
+
+        int result = db.update(
+                DatabaseHelper.TABLE_DRAFTS,
+                values,
+                DatabaseHelper.COLUMN_ID + "=?",
+                new String[]{String.valueOf(id)}
+        );
+
+        db.close();
+
+        return result;
+    }
     private Draft cursorToDraft(Cursor cursor) {
         Draft draft = new Draft();
 

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "721112483609",
+    "project_id": "memonest-app",
+    "storage_bucket": "memonest-app.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:721112483609:android:58c0dab8073b103c252788",
+        "android_client_info": {
+          "package_name": "com.mandakini.memonest"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDNIxw0dgKuW3dWE591sfoiLIngILrHnD4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

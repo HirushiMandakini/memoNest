@@ -39,6 +39,15 @@
         android:textAllCaps="false"
         android:backgroundTint="#FFFFFF"
         android:textColor="#0D6EFD" />
+    <Button
+        android:id="@+id/btnCamera"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:text="Take Photo with Camera"
+        android:textAllCaps="false"
+        android:backgroundTint="#FFFFFF"
+        android:textColor="#0D6EFD" />
 
     <Button
         android:id="@+id/btnSave"

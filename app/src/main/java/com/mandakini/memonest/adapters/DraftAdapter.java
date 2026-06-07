@@ -78,7 +78,7 @@ public class DraftAdapter extends RecyclerView.Adapter<DraftAdapter.DraftViewHol
         }
 
         if (draft.getIsUploaded() == 1) {
-            holder.txtStatus.setText("Uploaded");
+            holder.txtStatus.setText("Uploaded to Firestore");
             holder.txtStatus.setTextColor(0xFF22C55E);
         } else {
             holder.txtStatus.setText("Offline");
