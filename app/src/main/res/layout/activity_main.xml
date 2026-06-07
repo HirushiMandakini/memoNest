@@ -4,11 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#F7F9FC">
+    android:background="#F6F8FB">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="64dp"
+        android:orientation="horizontal"
         android:gravity="center_vertical"
         android:paddingStart="20dp"
         android:paddingEnd="20dp"
@@ -19,91 +20,80 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="MemoNest"
+            android:textColor="#0D6EFD"
             android:textSize="22sp"
-            android:textStyle="bold"
-            android:textColor="#0D6EFD" />
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/btnBulk"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Bulk Select"
+            android:textColor="#0D6EFD"
             android:textSize="13sp"
-            android:textColor="#0D6EFD" />
+            android:textStyle="bold" />
+
     </LinearLayout>
 
     <EditText
         android:id="@+id/edtSearch"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:layout_margin="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="14dp"
+        android:layout_marginEnd="16dp"
+        android:background="#FFFFFF"
         android:hint="Search drafts..."
         android:paddingStart="16dp"
         android:paddingEnd="16dp"
-        android:textSize="14sp"
-        android:background="#FFFFFF" />
+        android:textSize="14sp" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Recent Drafts"
-        android:textSize="18sp"
-        android:textStyle="bold"
         android:textColor="#111827"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        android:layout_marginBottom="10dp" />
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerDrafts"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
+        android:clipToPadding="false"
         android:paddingStart="16dp"
-        android:paddingEnd="16dp" />
+        android:paddingEnd="16dp"
+        android:paddingBottom="10dp" />
 
     <Button
         android:id="@+id/btnAddDraft"
         android:layout_width="match_parent"
-        android:layout_height="54dp"
-        android:layout_margin="16dp"
+        android:layout_height="52dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="10dp"
         android:text="+ New Draft"
         android:textAllCaps="false"
         android:textStyle="bold"
         android:textColor="#FFFFFF"
-        android:backgroundTint="#0D6EFD" />
+        android:backgroundTint="#2563EB" />
 
-    <LinearLayout
+    <Button
+        android:id="@+id/btnDeleteSelectedHome"
         android:layout_width="match_parent"
-        android:layout_height="58dp"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:background="#FFFFFF">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="Drafts"
-            android:textColor="#0D6EFD"
-            android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="Search"
-            android:textColor="#6B7280" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="Uploads"
-            android:textColor="#6B7280" />
-    </LinearLayout>
+        android:layout_height="52dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="12dp"
+        android:text="Delete Selected"
+        android:textAllCaps="false"
+        android:textStyle="bold"
+        android:textColor="#FFFFFF"
+        android:backgroundTint="#DC2626"
+        android:visibility="gone" />
 
 </LinearLayout>

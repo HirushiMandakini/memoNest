@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -26,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
     private EditText edtSearch;
     private RecyclerView recyclerDrafts;
-    private Button btnAddDraft;
+    private Button btnAddDraft, btnDeleteSelectedHome;
     private TextView btnBulk;
 
     private DraftDao draftDao;
@@ -42,11 +43,13 @@ public class MainActivity extends AppCompatActivity {
         recyclerDrafts = findViewById(R.id.recyclerDrafts);
         btnAddDraft = findViewById(R.id.btnAddDraft);
         btnBulk = findViewById(R.id.btnBulk);
+        btnDeleteSelectedHome = findViewById(R.id.btnDeleteSelectedHome);
 
         draftDao = new DraftDao(this);
         draftList = new ArrayList<>();
 
         recyclerDrafts.setLayoutManager(new LinearLayoutManager(this));
+
         adapter = new DraftAdapter(draftList, new DraftAdapter.OnDraftClickListener() {
             @Override
             public void onView(Draft draft) {
@@ -64,13 +67,10 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onDelete(Draft draft) {
-
                 new AlertDialog.Builder(MainActivity.this)
                         .setTitle("Delete Draft")
-                        .setMessage("Are you sure you want to delete \"" +
-                                draft.getTitle() + "\" ?")
+                        .setMessage("Are you sure you want to delete \"" + draft.getTitle() + "\"?")
                         .setPositiveButton("Delete", (dialog, which) -> {
-
                             draftDao.deleteDraft(draft.getId());
                             loadDrafts();
 
@@ -79,7 +79,6 @@ public class MainActivity extends AppCompatActivity {
                                     "Draft Deleted",
                                     Toast.LENGTH_SHORT
                             ).show();
-
                         })
                         .setNegativeButton("Cancel", null)
                         .show();
@@ -90,8 +89,18 @@ public class MainActivity extends AppCompatActivity {
                 Intent shareIntent = new Intent(Intent.ACTION_SEND);
                 shareIntent.setType("text/plain");
                 shareIntent.putExtra(Intent.EXTRA_SUBJECT, draft.getTitle());
-                shareIntent.putExtra(Intent.EXTRA_TEXT, draft.getTitle() + "\n\n" + draft.getContent());
+                shareIntent.putExtra(
+                        Intent.EXTRA_TEXT,
+                        draft.getTitle() + "\n\n" + draft.getContent()
+                );
                 startActivity(Intent.createChooser(shareIntent, "Share Draft"));
+            }
+
+            @Override
+            public void onSelectionChanged(int count) {
+                if (adapter != null && adapter.isBulkMode()) {
+                    btnBulk.setText(count > 0 ? count + " selected" : "Cancel");
+                }
             }
         });
 
@@ -122,21 +131,42 @@ public class MainActivity extends AppCompatActivity {
         });
 
         btnAddDraft.setOnClickListener(v -> {
-            Intent intent =
-                    new Intent(
-                            MainActivity.this,
-                            NewDraftActivity.class
-                    );
+            Intent intent = new Intent(MainActivity.this, NewDraftActivity.class);
             startActivity(intent);
         });
 
         btnBulk.setOnClickListener(v -> {
-            Intent intent = new Intent(
-                    MainActivity.this,
-                    BulkDeleteActivity.class
-            );
+            boolean newMode = !adapter.isBulkMode();
 
-            startActivity(intent);
+            adapter.setBulkMode(newMode);
+
+            btnDeleteSelectedHome.setVisibility(newMode ? View.VISIBLE : View.GONE);
+            btnBulk.setText(newMode ? "Cancel" : "Bulk Select");
+        });
+
+        btnDeleteSelectedHome.setOnClickListener(v -> {
+            List<Integer> selectedIds = adapter.getSelectedIds();
+
+            if (selectedIds.isEmpty()) {
+                Toast.makeText(this, "Please select drafts", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            new AlertDialog.Builder(this)
+                    .setTitle("Delete Selected Drafts")
+                    .setMessage("Are you sure you want to delete " + selectedIds.size() + " selected drafts?")
+                    .setPositiveButton("Delete", (dialog, which) -> {
+                        draftDao.deleteMultipleDrafts(selectedIds);
+                        loadDrafts();
+
+                        adapter.setBulkMode(false);
+                        btnDeleteSelectedHome.setVisibility(View.GONE);
+                        btnBulk.setText("Bulk Select");
+
+                        Toast.makeText(this, "Selected drafts deleted", Toast.LENGTH_SHORT).show();
+                    })
+                    .setNegativeButton("Cancel", null)
+                    .show();
         });
     }
 
