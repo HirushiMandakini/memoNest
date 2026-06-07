@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="32dp"
+    android:background="#FFFFFF">
+
+    <ImageView
+        android:id="@+id/imgLogo"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
+        android:src="@drawable/logo_container"
+        android:scaleType="fitCenter"
+        android:contentDescription="MemoNest logo" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="MemoNest"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        android:textColor="#0D6EFD"
+        android:layout_marginTop="2dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="WRITE OFFLINE. SHARE ANYTIME."
+        android:textSize="12sp"
+        android:textColor="#6B7280"
+        android:textStyle="bold"
+        android:letterSpacing="0.12"
+        android:layout_marginTop="14dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="INITIALIZING"
+        android:textSize="11sp"
+        android:textColor="#6B7280"
+        android:letterSpacing="0.12"
+        android:layout_marginTop="46dp" />
+
+    <ProgressBar
+        android:id="@+id/progressSplash"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="190dp"
+        android:layout_height="5dp"
+        android:layout_marginTop="8dp"
+        android:max="100"
+        android:progress="0"
+        android:indeterminate="false"
+        android:progressTint="#0D6EFD"
+        android:progressBackgroundTint="#D7E6FF" />
+
+</LinearLayout>

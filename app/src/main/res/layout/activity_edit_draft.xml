@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp"
+    android:background="#F7F9FC">
+
+    <EditText
+        android:id="@+id/edtEditTitle"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:hint="Draft Title"
+        android:padding="12dp"
+        android:background="#FFFFFF" />
+
+    <EditText
+        android:id="@+id/edtEditContent"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:hint="Write something..."
+        android:gravity="top"
+        android:inputType="textMultiLine"
+        android:padding="12dp"
+        android:layout_marginTop="14dp"
+        android:background="#FFFFFF" />
+
+    <Button
+        android:id="@+id/btnUpdate"
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:text="Update Draft"
+        android:textAllCaps="false"
+        android:textStyle="bold"
+        android:textColor="#FFFFFF"
+        android:backgroundTint="#0D6EFD"
+        android:layout_marginTop="16dp" />
+
+</LinearLayout>

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#F7F9FC">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:gravity="center_vertical"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:background="#FFFFFF">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="MemoNest"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:textColor="#0D6EFD" />
+
+        <TextView
+            android:id="@+id/btnBulk"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Bulk Select"
+            android:textSize="13sp"
+            android:textColor="#0D6EFD" />
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/edtSearch"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_margin="16dp"
+        android:hint="Search drafts..."
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:textSize="14sp"
+        android:background="#FFFFFF" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Recent Drafts"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textColor="#111827"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:layout_marginBottom="10dp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerDrafts"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp" />
+
+    <Button
+        android:id="@+id/btnAddDraft"
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:layout_margin="16dp"
+        android:text="+ New Draft"
+        android:textAllCaps="false"
+        android:textStyle="bold"
+        android:textColor="#FFFFFF"
+        android:backgroundTint="#0D6EFD" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="58dp"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:background="#FFFFFF">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Drafts"
+            android:textColor="#0D6EFD"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Search"
+            android:textColor="#6B7280" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Uploads"
+            android:textColor="#6B7280" />
+    </LinearLayout>
+
+</LinearLayout>
