@@ -56,13 +56,21 @@ public class DraftAdapter extends RecyclerView.Adapter<DraftAdapter.DraftViewHol
 
         holder.txtTitle.setText(draft.getTitle());
         holder.txtContent.setText(draft.getContent());
-        holder.txtDate.setText(draft.getCreatedAt());
-        Date date = new Date(Long.parseLong(draft.getCreatedAt()));
 
-        SimpleDateFormat sdf =
-                new SimpleDateFormat("dd MMM yyyy • hh:mm a", Locale.getDefault());
+        if (draft.getContent() != null && draft.getContent().length() > 70) {
+            holder.txtReadMore.setVisibility(View.VISIBLE);
+        } else {
+            holder.txtReadMore.setVisibility(View.GONE);
+        }
 
-        holder.txtDate.setText(sdf.format(date));
+        try {
+            Date date = new Date(Long.parseLong(draft.getCreatedAt()));
+            SimpleDateFormat sdf =
+                    new SimpleDateFormat("dd MMM yyyy • hh:mm a", Locale.getDefault());
+            holder.txtDate.setText(sdf.format(date));
+        } catch (Exception e) {
+            holder.txtDate.setText(draft.getCreatedAt());
+        }
 
         holder.checkSelect.setOnCheckedChangeListener(null);
         holder.checkSelect.setVisibility(bulkMode ? View.VISIBLE : View.GONE);
@@ -88,10 +96,10 @@ public class DraftAdapter extends RecyclerView.Adapter<DraftAdapter.DraftViewHol
 
         if (draft.getIsUploaded() == 1) {
             holder.txtStatus.setText("Uploaded to Firestore");
-            holder.txtStatus.setTextColor(0xFF22C55E);
+            holder.txtStatus.setTextColor(0xFF2563EB);
         } else {
             holder.txtStatus.setText("Offline");
-            holder.txtStatus.setTextColor(0xFFF59E0B);
+            holder.txtStatus.setTextColor(0xFF475569);
         }
 
         holder.itemView.setOnClickListener(v -> {
@@ -174,7 +182,7 @@ public class DraftAdapter extends RecyclerView.Adapter<DraftAdapter.DraftViewHol
     public static class DraftViewHolder extends RecyclerView.ViewHolder {
 
         CheckBox checkSelect;
-        TextView txtStatus, txtTitle, txtContent, txtDate, btnMore;
+        TextView txtStatus, txtTitle, txtContent, txtReadMore, txtDate, btnMore;
         ImageView imgDraftThumb;
 
         public DraftViewHolder(@NonNull View itemView) {
@@ -184,6 +192,7 @@ public class DraftAdapter extends RecyclerView.Adapter<DraftAdapter.DraftViewHol
             txtStatus = itemView.findViewById(R.id.txtStatus);
             txtTitle = itemView.findViewById(R.id.txtTitle);
             txtContent = itemView.findViewById(R.id.txtContent);
+            txtReadMore = itemView.findViewById(R.id.txtReadMore);
             txtDate = itemView.findViewById(R.id.txtDate);
             btnMore = itemView.findViewById(R.id.btnMore);
             imgDraftThumb = itemView.findViewById(R.id.imgDraftThumb);

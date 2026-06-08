@@ -1,33 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginBottom="12dp"
-    android:background="#FFFFFF"
-    android:elevation="2dp"
+    android:layout_height="126dp"
+    android:layout_marginBottom="14dp"
+    android:background="@drawable/bg_card_modern"
+    android:elevation="3dp"
     android:gravity="center_vertical"
     android:orientation="horizontal"
-    android:padding="14dp">
+    android:padding="12dp">
 
     <CheckBox
         android:id="@+id/checkSelect"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="10dp"
+        android:layout_marginEnd="8dp"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/imgDraftThumb"
+        android:layout_width="74dp"
+        android:layout_height="84dp"
+        android:layout_marginEnd="12dp"
+        android:background="#E5E7EB"
+        android:scaleType="centerCrop"
         android:visibility="gone" />
 
     <LinearLayout
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_weight="1"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/txtStatus"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="22dp"
+            android:gravity="center"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:background="@drawable/bg_status_chip"
             android:text="Offline"
-            android:textColor="#F59E0B"
+            android:textColor="#475569"
             android:textSize="10sp"
             android:textStyle="bold" />
 
@@ -35,11 +48,11 @@
             android:id="@+id/txtTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:maxLines="1"
+            android:layout_marginTop="7dp"
+            android:maxLines="2"
             android:text="Draft Title"
-            android:textColor="#111827"
-            android:textSize="16sp"
+            android:textColor="#0F172A"
+            android:textSize="15sp"
             android:textStyle="bold" />
 
         <TextView
@@ -49,35 +62,37 @@
             android:layout_marginTop="4dp"
             android:maxLines="2"
             android:text="Draft content preview"
-            android:textColor="#6B7280"
-            android:textSize="13sp" />
+            android:textColor="#64748B"
+            android:textSize="12sp" />
 
+        <TextView
+            android:id="@+id/txtReadMore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Read more"
+            android:textColor="#2563EB"
+            android:textSize="11sp"
+            android:textStyle="bold"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/txtDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="11sp"
-            android:textColor="#888888"
-            android:layout_marginTop="4dp"/>
-    </LinearLayout>
+            android:layout_marginTop="4dp"
+            android:text="07 Jun 2026 • 03:20 PM"
+            android:textColor="#94A3B8"
+            android:textSize="11sp" />
 
-    <ImageView
-        android:id="@+id/imgDraftThumb"
-        android:layout_width="76dp"
-        android:layout_height="76dp"
-        android:layout_marginStart="10dp"
-        android:background="#E5E7EB"
-        android:scaleType="centerCrop"
-        android:visibility="gone" />
+    </LinearLayout>
 
     <TextView
         android:id="@+id/btnMore"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
+        android:layout_width="28dp"
+        android:layout_height="match_parent"
         android:gravity="center"
         android:text="⋮"
-        android:textColor="#6B7280"
+        android:textColor="#64748B"
         android:textSize="22sp" />
 
 </LinearLayout>
